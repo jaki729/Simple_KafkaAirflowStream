@@ -1,0 +1,43 @@
+version: '3'
+services:
+  data_pipeline:
+    build:
+      context: .
+      dockerfile: Dockerfile  # Use the unified Dockerfile we created
+    container_name: data_pipeline
+    depends_on:
+      - kafka
+      - zookeeper
+    networks:
+      - data_pipeline_network
+    environment:
+      - KAFKA_BOOTSTRAP_SERVER=kafka:9092  # Kafka server
+
+  kafka:
+    image: wurstmeister/kafka:latest
+    container_name: kafka
+    environment:
+      KAFKA_ADVERTISED_LISTENER: INSIDE_KAFKA:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL: PLAINTEXT
+      KAFKA_LISTENER_NAME: INSIDE_KAFKA
+      KAFKA_LISTENER: INSIDE_KAFKA://kafka:9092
+      KAFKA_LISTENER_INTER_BROKER_PROTOCOL: PLAINTEXT
+      KAFKA_LISTENERS: INSIDE_KAFKA://kafka:9092
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_INTERNAL: INSIDE_KAFKA://kafka:9092
+    ports:
+      - "9092:9092"
+    networks:
+      - data_pipeline_network
+
+  zookeeper:
+    image: wurstmeister/zookeeper:latest
+    container_name: zookeeper
+    networks:
+      - data_pipeline_network
+    ports:
+      - "2181:2181"
+
+networks:
+  data_pipeline_network:
+    driver: bridge

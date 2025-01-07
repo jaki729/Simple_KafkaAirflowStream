@@ -1,0 +1,4 @@
+kafka-python
+six
+mysql.connector
+apache-airflow
