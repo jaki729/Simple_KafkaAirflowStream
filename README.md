@@ -1,1 +1,3 @@
 # Simple_KafkaAirflowStream
+
+KafkaAirflowStream is a project designed to integrate Kafka for real-time data streaming and Apache Airflow for orchestrating complex data pipelines. The system captures and processes streams of data, managing their flow from data generation, through Kafka's producer and broker architecture, to consumption and processing. Apache Airflow handles the scheduling and management of these processes, ensuring reliable and efficient operation. The data is stored in a MySQL database for further analysis. This project aims to create a robust, scalable, and Dockerized solution for handling and orchestrating real-time data streams with a focus on flexibility and automation.
