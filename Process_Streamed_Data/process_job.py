@@ -12,7 +12,7 @@ consumer = KafkaConsumer(
     value_deserializer=lambda x: json.loads(x.decode('utf-8'))  # Deserialize JSON messages
 )
 
-def flink_streaming_pipeline():
+def process_streaming_pipeline():
     """
     Processes incoming Kafka messages, processes the data, and stores it in MySQL.
     """
@@ -55,7 +55,7 @@ def flink_streaming_pipeline():
 # Entry point to start the Kafka consumer pipeline
 if __name__ == "__main__":
     try:
-        flink_streaming_pipeline()
+        process_streaming_pipeline()
     except KeyboardInterrupt:
         print("Stream processing interrupted by user. Exiting...")
     except Exception as e:
